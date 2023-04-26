@@ -13,19 +13,21 @@
 
     // variabel global p0
     struct Point p0;
+    // Deklarasi variabel p0 sebagai titik paling bawah kiri yang akan digunakan sebagai titik awal untuk membentuk hull.
 
-    // fungsi pembanding untuk sorting berdasarkan sudut polar terhadap p0
+    // Deklarasi fungsi compare yang digunakan sebagai parameter fungsi qsort untuk mengurutkan titik-titik berdasarkan sudut yang dibentuk dengan titik awal p0.
     int compare(const void *p1, const void *p2) {
         struct Point *a = (struct Point *)p1;
         struct Point *b = (struct Point *)p2;
 
-        int o = orientation(p0, *a, *b);
+        int o = orientation(p0, *a, *b); //fungsi orientation  digunakan untuk menentukan arah putaran tiga titik pada bidang kartesius.
         if (o == 0) {
             (haversine(p0, *a) >= haversine(p0, *b))? -1 : 1;
         } 
     
-    return (o == 2)? -1: 1;
+        return (o == 2)? -1: 1;
     }
+
 
 
     int main() {
@@ -60,7 +62,7 @@
 
         // close file
         fclose(file);
-        
+
         // menentukan titik paling bawah kiri
         int ymin = points[0].lat, min = 0;
         for (int i = 1; i < n; i++)
@@ -78,6 +80,8 @@
         // sort titik berdasarkan sudut polar terhadap p0
         qsort(&points[1], n-1, sizeof(struct Point), compare);
 
+        
+
         // menghapus titik yang sudut polarnya sama
         int m = 1; 
         for (int i=1; i<n; i++)
@@ -93,6 +97,7 @@
         // initialize stack
         struct Stack stack;
         stack.top = -1;
+        
         
 
         // tidak dapat membentuk convex hull jika titik < 3
@@ -110,12 +115,12 @@
 
                 m = 0;
 
-                for (int i = 3; i < n; i++) {
 
+                for (int i = 3; i < n; i++) {
                     struct Stack temp = copyStack(stack);
                     
                     // lakukan pop terhadap stack jika jarak 2 titik baru > 2500 atau arah 2 titik baru berlawanan arah jarum jam
-                    while ((stack.top >= 1 && orientation(nextToTop(&stack), top(stack), points[i]) != 2) || haversine(top(stack), points[i]) > 2500) {
+                    while (stack.top >= 1 && (orientation(nextToTop(&stack), top(stack), points[i]) != 2 || haversine(top(stack), points[i]) > 2500)) {
                         struct Point dump = pop(&stack);
                     }
 
@@ -127,6 +132,7 @@
                     } else {
                         push(&stack, points[i]);
                     }
+
                 }
 
                 // break while loop jika convex hull terbentuk
@@ -135,6 +141,8 @@
                     break;
                 }
             }
+
+
             
 
             // print result dan hitung keliling
