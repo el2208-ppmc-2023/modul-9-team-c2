@@ -2,14 +2,12 @@
 # Modul 9: Tugas Besar
 
 ### Contributors
-Cantumkan nama kelompok dan anggota kelompok Anda di bagian ini.
 1. Taufiq Hidayat (13221044)
 2. Arif Firman Fadhilah (13221045)
 3. Muhamad Fikri (13221046)
 4. Ganesha Indrayana Kusuma (13221047)
 
 ### Deskripsi
-Jelaskan program Anda secara singkat di bagian ini.
 Program menentukan kombinasi titik terluar membentuk bangun datar tertutup dengan panjang sisi tidak melebihi 2500 km dari daftar koordinat titik yang diberikan, serta mencetak panjang keliling bangun datar tersebut beserta titik-titik yang ada di dalam dan luar bangun datar tersebut dalam artian markas dan area pengawasan.
 
 ### Kompilasi
