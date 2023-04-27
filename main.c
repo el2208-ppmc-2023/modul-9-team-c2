@@ -1,10 +1,10 @@
     /*EL2208 Praktikum Pemecahan Masalah dengan C 2022/2023
-    *Modul:9-TugasBesar
-    *Kelompok:C2
-    *HaridanTanggal:27 April 2023
-    *Asisten(NIM):Muhammad Morteza Mudrick (13219061)
-    *NamaFile:main.c
-    *Deskripsi:File main untuk implementasi Convex Hull Algorithm yang di dalamnya terdapat directive file header stack dan point
+    *Modul: 9 - Tugas Besar
+    *Kelompok: C2
+    *HaridanTanggal: 27 April 2023
+    *Asisten(NIM): Muhammad Morteza Mudrick (13219061)
+    *NamaFile: main.c
+    *Deskripsi: File main untuk implementasi Convex Hull Algorithm yang di dalamnya terdapat directive file header stack dan point
     */
     
     #include <stdio.h>
@@ -28,8 +28,7 @@
         return (o == 2)? -1: 1;
     }
 
-
-
+    // PROGRAM UTAMA
     int main() {
         int n = 0;
         double perimeter = 0;
@@ -80,8 +79,6 @@
         // sort titik berdasarkan sudut polar terhadap p0
         qsort(&points[1], n-1, sizeof(struct Point), compare);
 
-        
-
         // menghapus titik yang sudut polarnya sama
         int m = 1; 
         for (int i=1; i<n; i++)
@@ -98,8 +95,6 @@
         struct Stack stack;
         stack.top = -1;
         
-        
-
         // tidak dapat membentuk convex hull jika titik < 3
         if (n < 3) {
             printf("Tidak dapat membentuk perbatasan\n");
@@ -112,9 +107,8 @@
                 push(&stack, points[0]);
                 push(&stack, points[1]);
                 push(&stack, points[2]);
-
+                
                 m = 0;
-
 
                 for (int i = 3; i < n; i++) {
                     struct Stack temp = copyStack(stack);
@@ -141,9 +135,6 @@
                     break;
                 }
             }
-
-
-            
 
             // print result dan hitung keliling
             printf("\nPerbatasan Efektif Negara Api:\n");
