@@ -1,59 +1,24 @@
+/*EL2208 Praktikum Pemecahan Masalah dengan C 2022/2023
+    *Modul:9-TugasBesar
+    *Kelompok:C2
+    *HaridanTanggal:27 April 2023
+    *Asisten(NIM):Muhammad Morteza Mudrick (13219061)
+    *NamaFile:point.c
+    *Deskripsi:File main untuk implementasi Convex Hull Algorithm yang di dalamnya terdapat directive file header stack dan point
+    */
+
 #include "point.h"
 
 #define BUFFER_SIZE 100
 #define PI 3.14159265358979323846
-#define EARTH_RADIUS 6371 // in km
+#define EARTH_RADIUS 6371 // dalam Kilometer
 
-int read_points_from_csv(const char* filename, struct Point* points) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error: could not open file %s\n", filename);
-        return -1;
-    }
-
-    char buffer[BUFFER_SIZE];
-    if (fgets(buffer, BUFFER_SIZE, file) == NULL) {
-        printf("Error: empty file\n");
-        fclose(file);
-        return -1;
-    }
-
-    int num_points = 0;
-    while (fgets(buffer, BUFFER_SIZE, file)) {
-        if (buffer[0] == '\n') {
-            continue; // Skip empty lines
-        }
-
-        struct Point p;
-
-        // Read name
-        char* pos = strchr(buffer, ',');
-        *pos = '\0';
-        strcpy(p.name, buffer);
-        buffer[strlen(buffer)] = ',';
-
-        // Read latitude
-        buffer[strlen(buffer) - 1] = '\0'; // Remove comma from end of name
-        pos = strchr(buffer, ',');
-        p.lat = atof(buffer + strlen(p.name) + 1);
-        buffer[strlen(p.name) + strlen(pos)] = ',';
-
-        // Read longitude
-        p.lon = atof(pos + 1);
-
-        points[num_points++] = p;
-    }
-
-    fclose(file);
-
-    return num_points;
-}
 
 struct Point copyPoint(struct Point originalPoint) {
-    // Allocate memory for the new point
+    // Alokasi memori untuk titik baru
     struct Point newPoint;
 
-    // Copy the values from the original point to the new point
+    // Mengcopy nilai dari titik awal ke titik baru
     strcpy(newPoint.name, originalPoint.name);
     newPoint.lat = originalPoint.lat;
     newPoint.lon = originalPoint.lon;
@@ -71,6 +36,7 @@ double haversine(struct Point a, struct Point b) {
     return distance;
 }
 
+// Deklarasi fungsi orientation yang digunakan untuk menentukan arah putaran tiga titik pada bidang kartesius.
 int orientation(struct Point a, struct Point b, struct Point c) {
     double val = (b.lon - a.lon) * (c.lat - b.lat) - (b.lat - a.lat) * (c.lon - b.lon);
     if (val == 0) {
